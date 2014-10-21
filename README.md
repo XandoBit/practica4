@@ -9,5 +9,6 @@ Autores: Rushil Lakhani Lakhani & Adán Rafael López Lecuona.
 -Expanda el ejemplo Acortador de URLs, para que admita además abreviaciones elegidas por el usuario.
 
 1. Configuramos :
-    -[Ir al Github ](https://github.com)
+
+         -[Ir al Github ](https://github.com)
 
