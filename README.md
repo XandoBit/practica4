@@ -10,5 +10,5 @@ Autores: Rushil Lakhani Lakhani & Adán Rafael López Lecuona.
 
 1. Configuramos :
 
-         -[Ir al Github ](https://github.com)
+  -[Ir al Github ](https://github.com)
 
