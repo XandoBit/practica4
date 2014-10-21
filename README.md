@@ -1,5 +1,4 @@
 
-=======
 Sistemas y Tecnologías Web
 =========
 Práctica 4 SYTW: Acortador de URLs
