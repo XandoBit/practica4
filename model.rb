@@ -4,7 +4,7 @@ class ShortenedUrl
    property :id, Serial
    property :url, Text
    property :url_opc, String
-   property :user, Text
+   property :mail, Text
  
 end
 
