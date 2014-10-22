@@ -49,7 +49,7 @@ end
 
 get '/auth/:name/callback' do
     @auth = request.env['omniauth.auth']
-    $email = @auth['info'].email
+    $mail = @auth['info'].mail
     @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)
   haml :index
 end
@@ -59,10 +59,12 @@ post '/' do
   uri = URI::parse(params[:url])
   if uri.is_a? URI::HTTP or uri.is_a? URI::HTTPS then
     begin
-      if params[:url_opc] == ""
-        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :mail => $mail)
+      if params[:url_opc] == " "
+        #@short_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :mail => $mail)
+	@short_url = ShortenedUrl.first_or_create(:url => params[:url], :mail => $mail) 
       else
-        @short_url_opc = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:opc_url], :mail => $mail)
+        #@short_url_opc = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:opc_url], :mail => $mail)
+	@short_url_opc = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :mail => $mail) # Se guarda la direccion corta
       end
    rescue Exception => e
       puts "EXCEPTION!"
@@ -76,9 +78,10 @@ post '/' do
 end
 
 get '/:shortened' do
-  
-  short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :email => $email) #se usara la id
-  short_url_opc = ShortenedUrl.first(:url_opc => params[:shortened], :email => $email) #se usara el campo url opcional
+  puts "inside get '/:shortened': #{params}"
+  #short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :email => $email) #se usara la id
+  short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base)) # se usara la id
+  short_url_opc = ShortenedUrl.first(:url_opc => params[:shortened], :mail => $mail) #se usara el campo url opcional
 
   if short_url_opc #Si tiene información, entonces devolvera por url_opc
     redirect short_url_opc.url, 301
