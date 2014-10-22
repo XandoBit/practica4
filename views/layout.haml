@@ -15,13 +15,18 @@
               %a{:href => "/auth/google_oauth2"} Autentificarse con Google
 			  %br
              
-        =yield
+       
         
 		.formulario
 		%form(action="/" method="POST")
-            %label(for="url")
-            %input(type="text" name="url" id="myurl" autofocus size=100 accesskey="s")
-            .formulario2
-			%input(type="submit" value="Shorten")
+            %input#formulario(type = "text" for="url")
+            %br
+			%input#formulario2(type="text" name="url_opc" )
+            %br
+			%input#boton(type="submit" value="Shorten")
+		    %br
+        .formulario2
+         %p Las URLs:		
+		 =yield
 #pie
      %p Autores: Rushil Lakhani Lakhani & Adan Rafael Lopez Lecuona.

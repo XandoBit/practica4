@@ -91,3 +91,33 @@ body{
 	
 }
 
+#boton{
+  height:35px;
+  width: 90px;
+  margin-top:30px;
+  border-radius:5px;
+  margin-left:250px;
+  background:linear-gradient(to right, #3D7EAA, #FFE47A);
+  font-size:20px;
+  
+}
+
+#formulario{
+  width:400px;
+  margin-left:20px;
+  height:20px;
+  padding-left:10px;
+  
+}
+
+#formulario1{
+  width:150px;
+  margin-left:20px;
+  height:20px;
+  padding-left:10px;
+  
+}
+
+
+
+
