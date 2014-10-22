@@ -12,26 +12,9 @@ require 'omniauth-google-oauth2'
 require 'pry'
 require 'erubis'
 
-use OmniAuth::Builder do       
-  config = YAML.load_file 'config/config.yml'
-  provider :google_oauth2, config['identifier'], config['secret']
-end
-  
-enable :sessions               
-set :session_secret, '*&(^#234a)'
-
-
 DataMapper.setup( :default, ENV['DATABASE_URL'] || 
                             "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
 
-configure :development do
-	DataMapper.setup( :default, ENV['DATABASE_URL'] || 
-                             "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
-end
-
-configure :production do   # para desplegar en heroku
-	DataMapper.setup(:default, ENV['DATABASE_URL'])
-end
 
 DataMapper::Logger.new($stdout, :debug)
 DataMapper::Model.raise_on_save_failure = true 
@@ -44,11 +27,30 @@ DataMapper.finalize
 DataMapper.auto_upgrade!
 
 Base = 36
+$mail = ""
+
+# Autentificacion con OmniAuth
+
+use OmniAuth::Builder do       
+  config = YAML.load_file 'config/config.yml'
+  provider :google_oauth2, config['identifier'], config['secret']
+end
+
+  
+enable :sessions               
+set :session_secret, '*&(^#234a)'
 
 get '/' do
   puts "inside get '/': #{params}"
-  @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20)
+  @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)
   # in SQL => SELECT * FROM "ShortenedUrl" ORDER BY "id" ASC
+  haml :index
+end
+
+get '/auth/:name/callback' do
+    @auth = request.env['omniauth.auth']
+    $email = @auth['info'].email
+    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)
   haml :index
 end
 
@@ -57,12 +59,16 @@ post '/' do
   uri = URI::parse(params[:url])
   if uri.is_a? URI::HTTP or uri.is_a? URI::HTTPS then
     begin
-      @short_url = ShortenedUrl.first_or_create(:url => params[:url])
-    rescue Exception => e
-      puts "EXCEPTION!!!!!!!!!!!!!!!!!!!"
+      if params[:url_opc] == ""
+        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :mail => $mail)
+      else
+        @short_url_opc = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:opc_url], :mail => $mail)
+      end
+   rescue Exception => e
+      puts "EXCEPTION!"
       pp @short_url
       puts e.message
-    end
+   end
   else
     logger.info "Error! <#{params[:url]}> is not a valid URL"
   end
@@ -70,15 +76,15 @@ post '/' do
 end
 
 get '/:shortened' do
-  puts "inside get '/:shortened': #{params}"
-  short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base))
+  
+  short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :email => $email) #se usara la id
+  short_url_opc = ShortenedUrl.first(:url_opc => params[:shortened], :email => $email) #se usara el campo url opcional
 
-  # HTTP status codes that start with 3 (such as 301, 302) tell the
-  # browser to go look for that resource in another location. This is
-  # used in the case where a web page has moved to another location or
-  # is no longer at the original location. The two most commonly used
-  # redirection status codes are 301 Move Permanently and 302 Found.
-  redirect short_url.url, 301
+  if short_url_opc #Si tiene información, entonces devolvera por url_opc
+    redirect short_url_opc.url, 301
+  else
+    redirect short_url.url, 301
+  end
 end
 
 error do haml :index end
