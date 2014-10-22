@@ -50,8 +50,23 @@ end
 get '/auth/:name/callback' do
     @auth = request.env['omniauth.auth']
     $mail = @auth['info'].mail
-    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)
-  haml :index
+    if @auth then
+        begin
+                puts "inside get '/': #{params}"
+                @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)  #listar url del usuario  
+                haml :index
+        end
+        else
+                redirect '/auth/failure'
+        end
+end
+
+get '/auth/failure' do
+        puts "inside get '/': #{params}"
+	$email = ""        
+	@list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)  #listar url generales  
+        haml :index
+
 end
 
 post '/' do
