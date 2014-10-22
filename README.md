@@ -8,6 +8,14 @@ Autores: Rushil Lakhani Lakhani & Adán Rafael López Lecuona.
 
 -Expanda el ejemplo Acortador de URLs, para que admita además abreviaciones elegidas por el usuario.
 
+1. Descargamos la base del código del repositorio de Github:
+  * [Repositorio de GitHub](https://github.com/crguezl/url_shortener_with_datamapper)
+  
+ 
+Static Page de la práctica 4:
+  * [Ir a static page de Github](http://xandobit.github.io/webpageSYTW.github.io/) 
+
+
 Recursos A Usar
 
 * [DataMapper](http://datamapper.org/getting-started.html)
