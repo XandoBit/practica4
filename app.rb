@@ -12,6 +12,15 @@ require 'omniauth-google-oauth2'
 require 'pry'
 require 'erubis'
 
+use OmniAuth::Builder do       
+  config = YAML.load_file 'config/config.yml'
+  provider :google_oauth2, config['identifier'], config['secret']
+end
+  
+enable :sessions               
+set :session_secret, '*&(^#234a)'
+
+
 DataMapper.setup( :default, ENV['DATABASE_URL'] || 
                             "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
 DataMapper::Logger.new($stdout, :debug)
