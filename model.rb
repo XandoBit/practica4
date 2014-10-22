@@ -3,8 +3,8 @@ class ShortenedUrl
  
    property :id, Serial
    property :idusu, Text 
-   property :url, Text
-   property :to, Text
+   property :url, String
+   property :to, String
  
 end
 
