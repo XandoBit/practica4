@@ -23,6 +23,16 @@ set :session_secret, '*&(^#234a)'
 
 DataMapper.setup( :default, ENV['DATABASE_URL'] || 
                             "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
+
+configure :development do
+	DataMapper.setup( :default, ENV['DATABASE_URL'] || 
+                             "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
+end
+
+configure :production do   # para desplegar en heroku
+	DataMapper.setup(:default, ENV['DATABASE_URL'])
+end
+
 DataMapper::Logger.new($stdout, :debug)
 DataMapper::Model.raise_on_save_failure = true 
 
