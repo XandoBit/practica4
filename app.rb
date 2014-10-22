@@ -7,6 +7,10 @@ require 'uri'
 require 'pp'
 #require 'socket'
 require 'data_mapper'
+require 'omniauth-oauth2'      
+require 'omniauth-google-oauth2'
+require 'pry'
+require 'erubis'
 
 DataMapper.setup( :default, ENV['DATABASE_URL'] || 
                             "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
