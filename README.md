@@ -8,7 +8,7 @@ Autores: Rushil Lakhani Lakhani & Adán Rafael López Lecuona.
 
 -Expanda el ejemplo Acortador de URLs, para que admita además abreviaciones elegidas por el usuario.
 
-See
+Recursos A Usar
 
 * [DataMapper](http://datamapper.org/getting-started.html)
 * [Haml](http://haml.info/)
