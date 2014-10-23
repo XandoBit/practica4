@@ -9,13 +9,18 @@ require 'pp'
 require 'data_mapper'
 require 'omniauth-oauth2'      
 require 'omniauth-google-oauth2'
-require 'pry'
-require 'erubis'
-
-DataMapper.setup( :default, ENV['DATABASE_URL'] || 
-                            "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
 
 
+configure :development, :test do
+  DataMapper.setup( :default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/my_shortened_urls.db" )
+end
+
+
+configure :production do #heroku
+  DataMapper.setup(:default, ENV['DATABASE_URL'])
+end
+#DataMapper.setup( :default, ENV['DATABASE_URL'] || 
+#                            "sqlite3://#{Dir.pwd}/db/my_shortened_urls.db" )
 DataMapper::Logger.new($stdout, :debug)
 DataMapper::Model.raise_on_save_failure = true 
 
@@ -24,68 +29,55 @@ require_relative 'model'
 DataMapper.finalize
 
 #DataMapper.auto_migrate!
-DataMapper.auto_upgrade!
+DataMapper.auto_upgrade! # No borra información , actualiza.
 
-Base = 36
-$mail = ""
+#Variable global
+Base = 36 
+$email = ""
 
-# Autentificacion con OmniAuth
-
+#Control del OmniAuth
 use OmniAuth::Builder do       
   config = YAML.load_file 'config/config.yml'
   provider :google_oauth2, config['identifier'], config['secret']
 end
-
   
 enable :sessions               
 set :session_secret, '*&(^#234a)'
 
+
 get '/' do
-  puts "inside get '/': #{params}"
-  @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)
-  # in SQL => SELECT * FROM "ShortenedUrl" ORDER BY "id" ASC
+    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20,:usuario => $email)
   haml :index
 end
 
+#Cuando es redirigido de Omniauth
 get '/auth/:name/callback' do
     @auth = request.env['omniauth.auth']
-    $mail = @auth['info'].mail
-    if @auth then
-        begin
-                puts "inside get '/': #{params}"
-                @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)  #listar url del usuario  
-                haml :index
-        end
-        else
-                redirect '/auth/failure'
-        end
+    $email = @auth['info'].email
+    @list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :usuario => $email)
+  haml :index
 end
 
-get '/auth/failure' do
-        puts "inside get '/': #{params}"
-	$email = ""        
-	@list = ShortenedUrl.all(:order => [ :id.asc ], :limit => 20, :mail => $mail)  #listar url generales  
-        haml :index
-
+get '/exit' do
+  session.clear
+  $email = ""
+  redirect '/'
 end
 
 post '/' do
-  puts "inside post '/': #{params}"
   uri = URI::parse(params[:url])
   if uri.is_a? URI::HTTP or uri.is_a? URI::HTTPS then
     begin
-      if params[:url_opc] == " "
-        #@short_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :mail => $mail)
-	@short_url = ShortenedUrl.first_or_create(:url => params[:url], :mail => $mail) 
+      if params[:url_opc] == ""
+        @short_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :usuario => $email)
       else
-        #@short_url_opc = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:opc_url], :mail => $mail)
-	@short_url_opc = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :mail => $mail) # Se guarda la direccion corta
+        @short_opc_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :usuario => $email)
       end
-   rescue Exception => e
+    rescue Exception => e
       puts "EXCEPTION!"
       pp @short_url
       puts e.message
-   end
+    end
   else
     logger.info "Error! <#{params[:url]}> is not a valid URL"
   end
@@ -93,16 +85,14 @@ post '/' do
 end
 
 get '/:shortened' do
-  puts "inside get '/:shortened': #{params}"
-  #short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :email => $email) #se usara la id
-  short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base)) # se usara la id
-  short_url_opc = ShortenedUrl.first(:url_opc => params[:shortened], :mail => $mail) #se usara el campo url opcional
+  short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :usuario => $email)
 
-  if short_url_opc #Si tiene información, entonces devolvera por url_opc
+  if short_url_opc #Si tiene información, entonces devolvera por opc_ulr
     redirect short_url_opc.url, 301
   else
     redirect short_url.url, 301
   end
 end
+
 
 error do haml :index end
