@@ -15,6 +15,10 @@ h1 {
         width: 100%;
         min-height:20%;        
         background-color:#6E6E6E;
+		border-radius:44px 44px 44px 44px;
+	    -moz-border-radius:44px 44px 44px 44px;
+	    -webkit-border-radius: 44px 44px 44px 44px;
+	    border:13 px solid#000000;
         color:#eee;; 
         overflow:hidden;
 }   
