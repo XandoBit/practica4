@@ -18,7 +18,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{:href => "/exit"} Salir
+          %a.navbar-brand{:href => "/"} Inicio
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li.active

@@ -1,0 +1,37 @@
+html,body {
+        height:100%;           
+}
+h1 {
+        font-family: fantasy;
+        font-size:60px;
+        color:white;        
+}     
+.lead {
+        color:#056CF3;
+}     
+/* Custom container */
+.contenedor {
+        margin: 0 auto;        
+        width: 100%;
+        min-height:50%;        
+        background-color:#056CF3;
+	border-radius:44px 44px 44px 44px;
+	-moz-border-radius:44px 44px 44px 44px;
+	-webkit-border-radius: 44px 44px 44px 44px;
+	border:13 px solid#000000;
+        color:#aaa;; 
+        overflow:hidden;
+}   
+.container-full a {  
+        color:#056CF3;
+        text-decoration:none;
+} 
+.v-center {
+        margin-top:2%;
+} 
+.container-down {              
+        margin-top:2%;         
+} 
+
+
+

@@ -19,7 +19,8 @@ end
 configure :production do #heroku
   DataMapper.setup(:default, ENV['DATABASE_URL'])
 end
-
+#DataMapper.setup( :default, ENV['DATABASE_URL'] || 
+#                            "sqlite3://#{Dir.pwd}/db/my_shortened_urls.db" )
 DataMapper::Logger.new($stdout, :debug)
 DataMapper::Model.raise_on_save_failure = true 
 
@@ -86,7 +87,7 @@ end
 get '/:shortened' do
   short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :usuario => $email)
 
-  if short_url_opc #Si tiene información, entonces devolvera la url corta
+  if short_url_opc #Si tiene información, entonces devolvera por opc_ulr
     redirect short_url_opc.url, 301
   else
     redirect short_url.url, 301

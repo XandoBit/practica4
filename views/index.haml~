@@ -12,4 +12,4 @@
           %a{:href=>"/#{url.id.to_s(Base)}" , :target=>"_blank"} #{url.url}
         %td 
           %a{:href=>"/#{url.url_opc}", :target=>"_blank"} #{url.url_opc}
-
+          %a{:href=>"/#{url.url_opc}", :target=>"_blank"} #{url.url_opc}
