@@ -18,15 +18,17 @@
        
         
 		.formulario
-		%form(action="/" method="POST")
-            %input#formulario(type = "text" for="url")
+		 %i.fa.fa-google
+		%form{:action =>"/", method => "POST"}
+            %input#formulario(:placeholder => "URL: ", :type => "text", :name=>"url")
             %br
-			%input#formulario2(type="text" name="url_opc" )
+			%input#formulario2(:placeholder => "URL corta: ", :type => "string", :name => "url_opc" )
             %br
-			%input#boton(type="submit" value="Shorten")
+			%input#boton(:type => "submit", :value => "Shorten")
 		    %br
         .formulario2
          %p Las URLs:		
 		 =yield
 #pie
+     %i.fa.fa-github
      %p Autores: Rushil Lakhani Lakhani & Adan Rafael Lopez Lecuona.
