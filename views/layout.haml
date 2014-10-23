@@ -1,20 +1,24 @@
 !!!
 %html
    %head
-    %meta{:charset => "UTF-8"}
+    
+	%meta{:charset => "UTF-8"}
       %title Practica 4: Acortador de URLs
       %link{:href => "/public/prac4.css", :rel => "stylesheet"}
       %link{:href => "http://netdna.bootstrapcdn.com/font-\nawesome/4.2.0/css/font-awesome.css", :rel => "stylesheet"}
     
 	
 	%body
+	   
 	   .titulo 
 	     %p Acortador de URLs
 		     .principal
               %i.fa.fa-google
               %a{:href => "/auth/google_oauth2"} Autentificarse con Google
 			  %br
-             
+              %br
+			  %br
+			
        
         
 		.formulario
@@ -26,9 +30,13 @@
             %br
 			%input#boton(:type => "submit", :value => "Shorten")
 		    %br
-        .formulario2
+        
+		
+		.formulario2
          %p Las URLs:		
 		 =yield
-#pie
+
+
+  #pie
      %i.fa.fa-github
      %p Autores: Rushil Lakhani Lakhani & Adan Rafael Lopez Lecuona.
