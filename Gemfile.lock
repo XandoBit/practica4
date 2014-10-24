@@ -123,6 +123,7 @@ DEPENDENCIES
   haml
   omniauth
   omniauth-google-oauth2
+  omniauth-oauth2
   pry
   sinatra-contrib
   sqlite3
