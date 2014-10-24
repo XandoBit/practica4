@@ -70,7 +70,7 @@ post '/' do
       if params[:url_opc] == ""
         @short_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :usuario => $email)
       else
-        @short_opc_url = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :usuario => $email)
+        @short_url_opc = ShortenedUrl.first_or_create(:url => params[:url], :url_opc => params[:url_opc], :usuario => $email)
       end
     rescue Exception => e
       puts "EXCEPTION!"
@@ -85,8 +85,9 @@ end
 
 get '/:shortened' do
   short_url = ShortenedUrl.first(:id => params[:shortened].to_i(Base), :usuario => $email)
+  short_url_opc = ShortenedUrl.first(:url_opc => params[:shortened])
 
-  if short_url_opc #Si tiene información, entonces devolvera la url corta
+  if short_url_opc  #Si tiene información, entonces devolvera la url corta
     redirect short_url_opc.url, 301
   else
     redirect short_url.url, 301
