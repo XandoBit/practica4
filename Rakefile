@@ -36,14 +36,3 @@ task :logs, :appname  do
   sh "heroku apps:destroy #{name}"
 end
 
-
-desc "Save config.yml "
-task :keep_secrets do
-  sh "cp config/config_template.yml config/config.yml "
-end
-
-desc "config_filled.yml client_secrets"
-task :use_keys do
-  sh "cp config/config_filled.yml config/config.yml"
-end
-
