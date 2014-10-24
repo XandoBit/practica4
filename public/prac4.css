@@ -1,0 +1,123 @@
+body{
+   background:linear-gradient(to right, #044561, #7abdff); 
+}
+
+#cabecera{
+  width:700px;
+  text-align:center;
+  margin-top:500px;
+  margin:auto;
+  padding-top:100px;
+}
+
+.titulo{
+  text-align:center;
+  width:600px;
+  margin:auto;
+  font-size:30px;
+  border:solid;
+  border-radius:50px;
+  border-top-left-radius:0;
+  border-bottom-right-radius:0;
+  margin-top:20px;
+}
+.principal{
+   background:rgba(143, 13, 143, 0.5);
+   border:solid;
+   border-radius:5px;
+   width:300px;
+   height:50px;
+   margin:auto;
+   margin-top:70px;
+   margin-left:20%;
+   text-align:center;
+   font-size:25px;
+   padding-top:10px;
+   float: left;
+	
+}
+
+
+.principal2{
+	background:rgba(143, 13, 143, 0.5);
+	border:solid;
+	border-radius:5px;
+	width:250px;
+	height:50px;
+	margin:auto;
+	margin-top:55px;
+	margin-left: 60%;
+	text-align:center;
+	font-size:25px;
+	padding-top:10px;
+
+	
+}
+#pie{
+  width:700px;
+  text-align:center;
+  margin-top:500px;
+  margin:auto;
+  padding-top:100px;
+}
+
+
+
+
+
+.formulario{
+	background:rgba(171, 168, 171, 0.5);
+	border:solid;
+	border-radius:5px;
+	width:600px;
+	height:180px;
+	margin:auto;
+	margin-top:90px;
+	font-size:30px;
+	padding-top:10px;
+	
+}
+
+.formulario2{
+	background:rgba(171, 168, 171, 0.5);
+	border:solid;
+	border-radius:5px;
+	width:auto;
+	height:100%;
+	margin:auto;
+	margin-top:60px;
+	font-size:15px;
+	padding-top:10px;
+	
+}
+
+#boton{
+  height:35px;
+  width: 90px;
+  margin-top:30px;
+  border-radius:5px;
+  margin-left:250px;
+  background:linear-gradient(to right, #aaaaaa, #22f222);
+  font-size:20px;
+  
+}
+
+#formulario{
+  width:400px;
+  margin-left:20px;
+  height:20px;
+  padding-left:10px;
+  
+}
+
+#formulario1{
+  width:150px;
+  margin-left:20px;
+  height:20px;
+  padding-left:10px;
+  
+}
+
+
+
+
