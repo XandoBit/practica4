@@ -10,6 +10,14 @@ Autores: Rushil Lakhani Lakhani & Adán Rafael López Lecuona.
 
 1. Descargamos la base del código del repositorio de Github:
   * [Repositorio de GitHub](https://github.com/crguezl/url_shortener_with_datamapper)
+
+2. Descargamos Data_mapper con sqlite3 para el almacenamiento en la B.D:
+  * [Repositorio de GitHub](https://github.com/crguezl/url_shortener_with_datamapper)
+3. Desarrollamos la app para almacenar las urls a cada usuario junto a la corta y email.
+4. Desarrollamos el diseño de la app.
+5. Subimos la App a Heroku:
+  * [App en Heroku](https://github.com/crguezl/url_shortener_with_datamapper)
+
   
  
 Static Page de la práctica 4:
